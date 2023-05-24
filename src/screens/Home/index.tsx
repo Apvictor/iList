@@ -15,22 +15,26 @@ import { UpdateProduct } from '../../components/UpdateProduct';
 export function Home() {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [product, setProduct] = useState<ProductModel>({});
-  const [refresh, setRefresh] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
+  const [refreshItem, setRefreshItem] = useState(false);
   const [modalInsertVisible, setModalInsertVisible] = useState(false);
   const [modalUpdateVisible, setModalUpdateVisible] = useState(false);
+
+  const [filterNotSelected, setFilterNotSelected] = useState(false);
+  const [filterSelected, setFilterSelected] = useState(false);
+  const [filterSort, setFilterSort] = useState(true);
 
   const [totalNotSelected, setTotalNotSelected] = useState(0);
   const [totalSelected, setTotalSelected] = useState(0);
   const [total, setTotal] = useState(0);
 
   async function productList() {
-    setProducts([]);
     const realm = await getRealm();
 
     const products = realm
       .objects<ProductModel[]>("Product")
+      .sorted("name")
       .toJSON();
-
 
     let total = 0;
     let totalSelected = 0;
@@ -49,36 +53,62 @@ export function Home() {
     setTotalSelected(totalSelected);
     setTotal(total);
 
-    setProducts(products);
+    if (filterSort) {
+      setProducts(products.sort((a, b) => (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0));
+    } else {
+      setProducts(products.sort((a, b) => (a.name < b.name) ? 1 : (b.name < a.name) ? -1 : 0));
+    }
+
+    if (filterNotSelected) {
+      setProducts(products.filter((item) => (!item.status)));
+    } else if (filterSelected) {
+      setProducts(products.filter((item) => (item.status)));
+    } else {
+      setProducts(products);
+    }
+
   }
 
-  function refreshProducts() {
+  function refreshDataFlatList() {
+    setProducts([]);
     productList();
-    setRefresh(false);
+    setRefreshData(false);
+  }
+
+  function refreshItemFlatList() {
+    productList();
+    setRefreshItem(false);
   }
 
   useEffect(() => {
     productList();
 
-    if (refresh) refreshProducts();
+    if (refreshData) refreshDataFlatList();
+    if (refreshItem) refreshItemFlatList();
 
-  }, [modalInsertVisible, modalUpdateVisible, refresh])
+  }, [modalInsertVisible, modalUpdateVisible, refreshItem, refreshData, filterNotSelected, filterSelected, filterSort])
 
   return (
     <Container>
       <Header setVisible={setModalInsertVisible} />
-      <SubHeader total={products.length} />
+      <SubHeader total={products.length} filterSelected={filterSelected} filterNotSelected={filterNotSelected} filterSort={filterSort} setFilterSort={setFilterSort} />
 
       {
         products.length > 0
-          ? <ProductList products={products} setRefresh={setRefresh} setVisible={setModalUpdateVisible} setProduct={setProduct} />
+          ? <ProductList products={products} setRefresh={setRefreshItem} setVisible={setModalUpdateVisible} setProduct={setProduct} />
           : <ProductListEmpty />
       }
 
-      <Footer total={total} totalSelected={totalSelected} totalNotSelected={totalNotSelected} />
+      <Footer
+        total={total}
+        totalSelected={totalSelected}
+        totalNotSelected={totalNotSelected}
+        setFilterSelected={setFilterSelected}
+        setFilterNotSelected={setFilterNotSelected}
+      />
 
-      <NewProduct visible={modalInsertVisible} setVisible={setModalInsertVisible} />
-      <UpdateProduct visible={modalUpdateVisible} setVisible={setModalUpdateVisible} productDB={product} />
+      <NewProduct visible={modalInsertVisible} setVisible={setModalInsertVisible} setRefresh={setRefreshData} />
+      <UpdateProduct visible={modalUpdateVisible} setVisible={setModalUpdateVisible} productDB={product} setRefresh={setRefreshData} />
 
     </Container >
   );

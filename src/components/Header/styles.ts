@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  padding-top: 10px;
+  padding-top: 24px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -20,6 +20,7 @@ export const LogoImg = styled.Image`
 export const Title = styled.Text`
   padding-left: 5px;
   font-weight: bold;
+  font-size: 16px;
   color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 

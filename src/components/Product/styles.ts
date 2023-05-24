@@ -11,8 +11,8 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const CheckBox = styled.TouchableOpacity<any>`
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 4px;
   align-items: center;
   justify-content: space-between;

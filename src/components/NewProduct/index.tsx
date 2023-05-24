@@ -11,8 +11,9 @@ import { Button, ButtonText, Close, Form, Header, Input, ModalContainer, ModalCo
 interface Props {
   visible: boolean;
   setVisible: Function;
+  setRefresh: Function;
 }
-export function NewProduct({ visible, setVisible }: Props) {
+export function NewProduct({ visible, setVisible, setRefresh }: Props) {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -32,6 +33,7 @@ export function NewProduct({ visible, setVisible }: Props) {
       productService.insert(data);
 
       setVisible(false);
+      setRefresh(true);
 
       setName("");
       setPrice("");
@@ -46,7 +48,7 @@ export function NewProduct({ visible, setVisible }: Props) {
           <Header>
             <Title>Novo Produto</Title>
             <Close onPress={() => setVisible(!visible)}>
-              <X size={24} color={theme.COLORS.PLACEHOLDER} />
+              <X size={32} color={theme.COLORS.PLACEHOLDER} />
             </Close>
           </Header>
 

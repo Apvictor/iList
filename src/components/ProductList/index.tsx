@@ -20,7 +20,6 @@ export function ProductList({ products, setRefresh, setVisible, setProduct }: Pr
         data={products}
         keyExtractor={item => item._id}
         renderItem={({ item }) => <Product productDB={item} setRefresh={setRefresh} setVisible={setVisible} setProductDB={setProduct} />}
-        contentContainerStyle={{ paddingBottom: 10 }}
         showsVerticalScrollIndicator={true}
         style={{ flex: 1 }}
       />

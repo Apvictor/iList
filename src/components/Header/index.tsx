@@ -12,7 +12,7 @@ export function Header({ setVisible }: Props) {
   return (
     <Container>
       <Content>
-        <Notepad size={24} color={theme.COLORS.GREEN} weight="fill" />
+        <Notepad size={32} color={theme.COLORS.GREEN} weight="fill" />
         <Title>iList</Title>
       </Content>
       <ButtonAdd onPress={() => setVisible(true)}>

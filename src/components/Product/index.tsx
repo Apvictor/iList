@@ -69,15 +69,15 @@ export function Product({ productDB, setRefresh, setVisible, setProductDB }: Pro
 
     }>
       <CheckBox status={product.status} onPress={() => productStatus()}>
-        {product.status && <Check size={24} weight="bold" />}
+        {product.status && <Check size={32} weight="bold" />}
       </CheckBox>
       <ProductName status={product.status}>{product.name}</ProductName>
-      <ProductPrice status={product.status}>R$ {product.price * product.quantity}</ProductPrice>
+      <ProductPrice status={product.status}>R$ {(product.price * product.quantity).toFixed(2)}</ProductPrice>
 
       <ButtonContainer>
         <ButtonLess onPress={() => productLess()}>
           <MinusCircle
-            size={24}
+            size={32}
             weight="bold"
             color={theme.COLORS.REDD}
           />
@@ -85,7 +85,7 @@ export function Product({ productDB, setRefresh, setVisible, setProductDB }: Pro
         <ButtonText>{product.quantity}</ButtonText>
         <ButtonMore onPress={() => productMore()}>
           <PlusCircle
-            size={24}
+            size={32}
             weight="bold"
             color={theme.COLORS.GREEND}
           />

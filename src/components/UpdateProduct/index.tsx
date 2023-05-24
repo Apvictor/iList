@@ -13,8 +13,9 @@ interface Props {
   productDB: ProductModel,
   visible: boolean;
   setVisible: Function;
+  setRefresh: Function;
 }
-export function UpdateProduct({ productDB, visible, setVisible }: Props) {
+export function UpdateProduct({ productDB, visible, setVisible, setRefresh }: Props) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -34,6 +35,7 @@ export function UpdateProduct({ productDB, visible, setVisible }: Props) {
       productService.update(productDB._id, data);
 
       setVisible(false);
+      setRefresh(true);
     }
   }
 
@@ -56,7 +58,7 @@ export function UpdateProduct({ productDB, visible, setVisible }: Props) {
           <Header>
             <Title>Atualizar Produto</Title>
             <Close onPress={() => setVisible(!visible)}>
-              <X size={24} color={theme.COLORS.PLACEHOLDER} />
+              <X size={32} color={theme.COLORS.PLACEHOLDER} />
             </Close>
           </Header>
 
