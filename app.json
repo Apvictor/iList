@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "ilist",
+    "slug": "ilist",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9ab8af8a-13a4-4889-ad39-9d1a2b5ec671"
+      }
+    }
+  }
+}
