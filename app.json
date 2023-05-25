@@ -1,11 +1,26 @@
 {
   "expo": {
-    "name": "ilist",
+    "name": "iList",
     "slug": "ilist",
+    "platforms": [
+      "android"
+    ],
     "version": "1.0.0",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#121214"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#121214"
+      }
+    },
     "extra": {
       "eas": {
         "projectId": "6e91b986-f8ed-4a0e-aef1-88939023c9e3"
