@@ -11,7 +11,7 @@ import { ProductList } from '../../components/ProductList';
 import { ProductListEmpty } from '../../components/ProductListEmpty';
 
 import { DeleteProduct } from '../../components/Modals/DeleteProduct';
-import { DeleteProducts } from '../../components/Modals/DeleteProducts';
+import { ClearProduct } from '../../components/Modals/ClearProduct';
 import { NewProduct } from '../../components/Modals/NewProduct';
 import { UpdateProduct } from '../../components/Modals/UpdateProduct';
 
@@ -126,6 +126,11 @@ export function Home() {
         setFilterNotSelected={setFilterNotSelected}
       />
 
+      <ClearProduct
+        visible={modalClearVisible}
+        setVisible={setModalClearVisible}
+        setRefresh={setRefreshData}
+      />
       <NewProduct
         visible={modalInsertVisible}
         setVisible={setModalInsertVisible}
@@ -142,11 +147,6 @@ export function Home() {
         setVisible={setModalDeleteVisible}
         setRefresh={setRefreshData}
         productDB={product}
-      />
-      <DeleteProducts
-        visible={modalClearVisible}
-        setVisible={setModalClearVisible}
-        setRefresh={setRefreshData}
       />
 
     </Container >

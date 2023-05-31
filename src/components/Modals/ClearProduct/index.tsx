@@ -11,7 +11,7 @@ interface Props {
   setVisible: Function;
   setRefresh: Function;
 }
-export function DeleteProducts({ visible, setVisible, setRefresh }: Props) {
+export function ClearProduct({ visible, setVisible, setRefresh }: Props) {
 
   async function deleteProducts() {
     const productService = new ProductService();
