@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.realmdbapp",
+    package = "com.ilist",
 )
 
 android_resource(
     name = "res",
-    package = "com.realmdbapp",
+    package = "com.ilist",
     res = "src/main/res",
 )
 
