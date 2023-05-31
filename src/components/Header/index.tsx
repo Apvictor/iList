@@ -5,11 +5,11 @@ import theme from '../../theme';
 import { ButtonAdd, ButtonDelete, Buttons, Container, Content, Title } from './styles';
 
 interface Props {
-  setModalDeleteVisible: Function;
+  setModalClearVisible: Function;
   setModalInsertVisible: Function;
   total: number;
 }
-export function Header({ setModalInsertVisible, setModalDeleteVisible, total }: Props) {
+export function Header({ setModalInsertVisible, setModalClearVisible, total }: Props) {
 
   return (
     <Container>
@@ -20,7 +20,7 @@ export function Header({ setModalInsertVisible, setModalDeleteVisible, total }: 
       <Buttons>
         {
           total > 0 &&
-          <ButtonDelete onPress={() => setModalDeleteVisible(true)}>
+          <ButtonDelete onPress={() => setModalClearVisible(true)}>
             <Trash size={24} color={theme.COLORS.WHITE} />
           </ButtonDelete>
         }

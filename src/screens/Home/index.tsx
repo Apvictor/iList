@@ -101,7 +101,7 @@ export function Home() {
     <Container>
       <Header
         setModalInsertVisible={setModalInsertVisible}
-        setModalDeleteVisible={setModalDeleteVisible}
+        setModalClearVisible={setModalClearVisible}
         total={products.length}
       />
       <SubHeader total={products.length} filterSelected={filterSelected} filterNotSelected={filterNotSelected} filterSort={filterSort} setFilterSort={setFilterSort} />
