@@ -9,17 +9,24 @@ import { Container } from './styles';
 interface Props {
   products: ProductModel[],
   setRefresh: Function,
-  setVisible: Function;
+  setModalUpdateVisible: Function;
+  setModalDeleteVisible: Function;
   setProduct: Function;
 }
-export function ProductList({ products, setRefresh, setVisible, setProduct }: Props) {
+export function ProductList({ products, setRefresh, setModalUpdateVisible, setModalDeleteVisible, setProduct }: Props) {
 
   return (
     <Container>
       <FlatList
         data={products}
         keyExtractor={item => item._id}
-        renderItem={({ item }) => <Product productDB={item} setRefresh={setRefresh} setVisible={setVisible} setProductDB={setProduct} />}
+        renderItem={({ item }) => <Product
+          productDB={item}
+          setRefresh={setRefresh}
+          setModalUpdateVisible={setModalUpdateVisible}
+          setModalDeleteVisible={setModalDeleteVisible}
+          setProductDB={setProduct}
+        />}
         showsVerticalScrollIndicator={true}
         style={{ flex: 1 }}
       />

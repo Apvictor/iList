@@ -13,8 +13,15 @@ export const Content = styled.View`
   justify-content: center;
 `;
 
+export const Header = styled.View``;
+
 export const Subtitle = styled.Text`
   font-size: 18px;
+  color: ${({ theme }) => theme.COLORS.TITLE};
+`;
+
+export const SubtitleFilter = styled.Text`
+  font-size: 14px;
   color: ${({ theme }) => theme.COLORS.TITLE};
 `;
 
@@ -22,7 +29,6 @@ export const TotalItems = styled.Text`
   font-size: 16px;
   color: ${({ theme }) => theme.COLORS.PLACEHOLDER};
 `;
-
 
 export const ButtonSort = styled.TouchableOpacity`
   margin-left: 5px;

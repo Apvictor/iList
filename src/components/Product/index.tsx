@@ -5,16 +5,18 @@ import theme from "../../theme";
 
 import { ProductModel } from '../../domain/product/product.model';
 
-import { ButtonContainer, ButtonLess, ButtonMore, ButtonText, CheckBox, Container, ProductName, ProductPrice } from './styles';
 import { ProductService } from '../../domain/product/product.service';
+
+import { ButtonContainer, ButtonLess, ButtonMore, ButtonText, CheckBox, Container, ProductName, ProductPrice } from './styles';
 
 interface Props {
   productDB: ProductModel,
   setRefresh: Function,
-  setVisible: Function;
+  setModalUpdateVisible: Function;
+  setModalDeleteVisible: Function;
   setProductDB: Function;
 }
-export function Product({ productDB, setRefresh, setVisible, setProductDB }: Props) {
+export function Product({ productDB, setRefresh, setModalUpdateVisible, setModalDeleteVisible, setProductDB }: Props) {
   const [product, setProduct] = useState(productDB);
 
   function productLess() {
@@ -56,15 +58,20 @@ export function Product({ productDB, setRefresh, setVisible, setProductDB }: Pro
   useEffect(() => {
     const productService = new ProductService();
 
-    if (product.quantity >= 1) productService.update(product._id, product);
-    else productService.delete(product._id);
+    if (product.quantity >= 1) {
+      productService.update(product._id, product);
+    }
+    else {
+      setModalDeleteVisible(true);
+      setProductDB(product);
+    }
 
   }, [product])
 
   return (
     <Container onPress={() => {
-      setVisible(true);
-      setProductDB(product)
+      setModalUpdateVisible(true);
+      setProductDB(product);
     }
 
     }>

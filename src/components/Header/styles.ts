@@ -24,13 +24,19 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
-export const ButtonAdd = styled.TouchableOpacity`
-  border-radius: 4px;
-  padding: 10px 15px;
-  background-color: ${({ theme }) => theme.COLORS.GREEN};
+export const Buttons = styled.View`
+  flex-direction: row;
 `;
 
-export const ButtonAddText = styled.Text`
-  font-weight: bold;
-  color: ${({ theme }) => theme.COLORS.WHITE};
+export const ButtonDelete = styled.TouchableOpacity`
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.COLORS.REDD};
+`;
+
+export const ButtonAdd = styled.TouchableOpacity`
+  padding: 10px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.COLORS.GREEN};
 `;

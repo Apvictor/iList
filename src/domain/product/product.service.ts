@@ -63,4 +63,22 @@ export class ProductService {
       console.error(error);
     }
   }
+
+  public async deleteAll() {
+    try {
+      const realm = await getRealm();
+
+      const product = realm
+        .objects<ProductModel>("Product");
+
+      if (product.length > 0) {
+        realm.write(() => {
+          realm.delete(product[0])
+        });
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

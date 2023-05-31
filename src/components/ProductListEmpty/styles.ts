@@ -7,11 +7,6 @@ export const Container = styled.View`
   justify-content: center;
 `;
 
-export const CarImg = styled.Image`
-  height: 140px;
-  width: 140px;
-`;
-
 export const CarText = styled.Text`
   color: ${({ theme }) => theme.COLORS.TEXT};
 `;

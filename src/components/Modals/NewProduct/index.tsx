@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Modal } from 'react-native';
 import { X } from 'phosphor-react-native';
 
-import theme from '../../theme';
+import theme from '../../../theme';
 
-import { ProductService } from '../../domain/product/product.service';
+import { ProductService } from '../../../domain/product/product.service';
 
 import { Button, ButtonText, Close, Form, Header, Input, ModalContainer, ModalContent, Title } from './styles';
 

@@ -1,24 +1,33 @@
 import { useEffect, useState } from 'react';
 
-import { Footer } from '../../components/Footer';
+import { getRealm } from '../../database/realm';
+
+import { ProductModel } from '../../domain/product/product.model';
+
 import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
+import { SubHeader } from '../../components/SubHeader';
 import { ProductList } from '../../components/ProductList';
 import { ProductListEmpty } from '../../components/ProductListEmpty';
-import { SubHeader } from '../../components/SubHeader';
+
+import { DeleteProduct } from '../../components/Modals/DeleteProduct';
+import { DeleteProducts } from '../../components/Modals/DeleteProducts';
+import { NewProduct } from '../../components/Modals/NewProduct';
+import { UpdateProduct } from '../../components/Modals/UpdateProduct';
 
 import { Container } from './styles';
-import { ProductModel } from '../../domain/product/product.model';
-import { NewProduct } from '../../components/NewProduct';
-import { getRealm } from '../../database/realm';
-import { UpdateProduct } from '../../components/UpdateProduct';
 
 export function Home() {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [product, setProduct] = useState<ProductModel>({});
+
   const [refreshData, setRefreshData] = useState(false);
   const [refreshItem, setRefreshItem] = useState(false);
+
   const [modalInsertVisible, setModalInsertVisible] = useState(false);
   const [modalUpdateVisible, setModalUpdateVisible] = useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+  const [modalClearVisible, setModalClearVisible] = useState(false);
 
   const [filterNotSelected, setFilterNotSelected] = useState(false);
   const [filterSelected, setFilterSelected] = useState(false);
@@ -90,12 +99,22 @@ export function Home() {
 
   return (
     <Container>
-      <Header setVisible={setModalInsertVisible} />
+      <Header
+        setModalInsertVisible={setModalInsertVisible}
+        setModalDeleteVisible={setModalDeleteVisible}
+        total={products.length}
+      />
       <SubHeader total={products.length} filterSelected={filterSelected} filterNotSelected={filterNotSelected} filterSort={filterSort} setFilterSort={setFilterSort} />
 
       {
         products.length > 0
-          ? <ProductList products={products} setRefresh={setRefreshItem} setVisible={setModalUpdateVisible} setProduct={setProduct} />
+          ? <ProductList
+            products={products}
+            setProduct={setProduct}
+            setRefresh={setRefreshItem}
+            setModalUpdateVisible={setModalUpdateVisible}
+            setModalDeleteVisible={setModalDeleteVisible}
+          />
           : <ProductListEmpty />
       }
 
@@ -107,8 +126,28 @@ export function Home() {
         setFilterNotSelected={setFilterNotSelected}
       />
 
-      <NewProduct visible={modalInsertVisible} setVisible={setModalInsertVisible} setRefresh={setRefreshData} />
-      <UpdateProduct visible={modalUpdateVisible} setVisible={setModalUpdateVisible} productDB={product} setRefresh={setRefreshData} />
+      <NewProduct
+        visible={modalInsertVisible}
+        setVisible={setModalInsertVisible}
+        setRefresh={setRefreshData}
+      />
+      <UpdateProduct
+        visible={modalUpdateVisible}
+        setVisible={setModalUpdateVisible}
+        setRefresh={setRefreshData}
+        productDB={product}
+      />
+      <DeleteProduct
+        visible={modalDeleteVisible}
+        setVisible={setModalDeleteVisible}
+        setRefresh={setRefreshData}
+        productDB={product}
+      />
+      <DeleteProducts
+        visible={modalClearVisible}
+        setVisible={setModalClearVisible}
+        setRefresh={setRefreshData}
+      />
 
     </Container >
   );

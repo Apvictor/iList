@@ -2,7 +2,7 @@ import { SortAscending, SortDescending } from 'phosphor-react-native';
 
 import theme from '../../theme';
 
-import { ButtonSort, Container, Content, Subtitle, TotalItems } from './styles';
+import { ButtonSort, Container, Content, Subtitle, SubtitleFilter, TotalItems } from './styles';
 
 interface Props {
   total: number;
@@ -15,10 +15,11 @@ export function SubHeader({ total, filterNotSelected, filterSelected, filterSort
 
   return (
     <Container>
-      <Subtitle>
-        Lista de compras
-        {filterNotSelected && "\nFiltrado por não selecionados"}
-        {filterSelected && "\nFiltrado por selecionados"}
+      <Subtitle>Lista de compras
+        <SubtitleFilter>
+          {filterNotSelected && "\nFiltrado por não selecionados"}
+          {filterSelected && "\nFiltrado por selecionados"}
+        </SubtitleFilter>
       </Subtitle>
 
       <Content>

@@ -15,9 +15,8 @@ export default {
     PLACEHOLDER: '#7C7C8A',
     TEXT: '#C4C4CC',
     TITLE: '#E1E1E6',
-    
+
     REDD: '#AA2834CC',
     RED: '#F75A68',
-
   }
 };

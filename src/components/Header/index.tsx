@@ -1,13 +1,15 @@
-import { Notepad } from 'phosphor-react-native';
+import { Notepad, Plus, Trash } from 'phosphor-react-native';
 
 import theme from '../../theme';
 
-import { ButtonAdd, ButtonAddText, Container, Content, Title } from './styles';
+import { ButtonAdd, ButtonDelete, Buttons, Container, Content, Title } from './styles';
 
 interface Props {
-  setVisible: Function;
+  setModalDeleteVisible: Function;
+  setModalInsertVisible: Function;
+  total: number;
 }
-export function Header({ setVisible }: Props) {
+export function Header({ setModalInsertVisible, setModalDeleteVisible, total }: Props) {
 
   return (
     <Container>
@@ -15,11 +17,18 @@ export function Header({ setVisible }: Props) {
         <Notepad size={32} color={theme.COLORS.GREEN} weight="fill" />
         <Title>iList</Title>
       </Content>
-      <ButtonAdd onPress={() => setVisible(true)}>
-        <ButtonAddText>
-          Novo Produto
-        </ButtonAddText>
-      </ButtonAdd>
+      <Buttons>
+        {
+          total > 0 &&
+          <ButtonDelete onPress={() => setModalDeleteVisible(true)}>
+            <Trash size={24} color={theme.COLORS.WHITE} />
+          </ButtonDelete>
+        }
+
+        <ButtonAdd onPress={() => setModalInsertVisible(true)}>
+          <Plus size={24} color={theme.COLORS.WHITE} />
+        </ButtonAdd>
+      </Buttons>
     </Container>
   );
 }
