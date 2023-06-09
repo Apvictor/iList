@@ -17,6 +17,5 @@ export default {
     TITLE: '#E1E1E6',
 
     REDD: '#AA2834CC',
-    RED: '#F75A68',
   }
 };

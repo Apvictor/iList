@@ -6,32 +6,38 @@ import { ProductModel } from '../../domain/product/product.model';
 
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
+import { Loading } from '../../components/Loading';
+import { InputText } from '../../components/InputText';
 import { SubHeader } from '../../components/SubHeader';
 import { ProductList } from '../../components/ProductList';
 import { ProductListEmpty } from '../../components/ProductListEmpty';
 
 import { DeleteProduct } from '../../components/Modals/DeleteProduct';
-import { ClearProduct } from '../../components/Modals/ClearProduct';
+import { CleanProduct } from '../../components/Modals/CleanProduct';
 import { NewProduct } from '../../components/Modals/NewProduct';
 import { UpdateProduct } from '../../components/Modals/UpdateProduct';
 
 import { Container } from './styles';
 
+import theme from '../../theme';
+
 export function Home() {
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [product, setProduct] = useState<ProductModel>({});
 
-  const [refreshData, setRefreshData] = useState(false);
-  const [refreshItem, setRefreshItem] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [modalInsertVisible, setModalInsertVisible] = useState(false);
   const [modalUpdateVisible, setModalUpdateVisible] = useState(false);
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
-  const [modalClearVisible, setModalClearVisible] = useState(false);
+  const [modalCleanVisible, setModalCleanVisible] = useState(false);
 
   const [filterNotSelected, setFilterNotSelected] = useState(false);
   const [filterSelected, setFilterSelected] = useState(false);
   const [filterSort, setFilterSort] = useState(true);
+  const [filterActiveSearch, setFilterActiveSearch] = useState(false);
+  const [filterSearch, setFilterSearch] = useState("");
 
   const [totalNotSelected, setTotalNotSelected] = useState(0);
   const [totalSelected, setTotalSelected] = useState(0);
@@ -42,7 +48,8 @@ export function Home() {
 
     const products = realm
       .objects<ProductModel[]>("Product")
-      .sorted("name")
+      .filtered(`name CONTAINS '${filterSearch}'`)
+      .sorted("name", !filterSort)
       .toJSON();
 
     let total = 0;
@@ -62,12 +69,6 @@ export function Home() {
     setTotalSelected(totalSelected);
     setTotal(total);
 
-    if (filterSort) {
-      setProducts(products.sort((a, b) => (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0));
-    } else {
-      setProducts(products.sort((a, b) => (a.name < b.name) ? 1 : (b.name < a.name) ? -1 : 0));
-    }
-
     if (filterNotSelected) {
       setProducts(products.filter((item) => (!item.status)));
     } else if (filterSelected) {
@@ -76,45 +77,53 @@ export function Home() {
       setProducts(products);
     }
 
-  }
+    filterActiveSearch == false && setFilterSearch("");
 
-  function refreshDataFlatList() {
-    setProducts([]);
-    productList();
-    setRefreshData(false);
-  }
-
-  function refreshItemFlatList() {
-    productList();
-    setRefreshItem(false);
+    setRefresh(false);
+    setLoading(false);
   }
 
   useEffect(() => {
     productList();
 
-    if (refreshData) refreshDataFlatList();
-    if (refreshItem) refreshItemFlatList();
 
-  }, [modalInsertVisible, modalUpdateVisible, refreshItem, refreshData, filterNotSelected, filterSelected, filterSort])
+  }, [modalInsertVisible, modalUpdateVisible, refresh, loading, filterNotSelected, filterSelected, filterSort, filterActiveSearch, filterSearch])
 
   return (
     <Container>
+
       <Header
         setModalInsertVisible={setModalInsertVisible}
-        setModalClearVisible={setModalClearVisible}
+        setModalCleanVisible={setModalCleanVisible}
         total={products.length}
       />
-      <SubHeader total={products.length} filterSelected={filterSelected} filterNotSelected={filterNotSelected} filterSort={filterSort} setFilterSort={setFilterSort} />
+      <SubHeader
+        total={products.length}
+        filterActiveSearch={filterActiveSearch}
+        setFilterActiveSearch={setFilterActiveSearch}
+        filterSelected={filterSelected}
+        filterNotSelected={filterNotSelected}
+        filterSort={filterSort}
+        setFilterSort={setFilterSort}
+      />
+
+      {
+        filterActiveSearch &&
+        <InputText bg={theme.COLORS.SHAPEP} placeholder='Pesquisar' value={filterSearch} setValue={setFilterSearch} />
+      }
 
       {
         products.length > 0
-          ? <ProductList
-            products={products}
-            setProduct={setProduct}
-            setRefresh={setRefreshItem}
-            setModalUpdateVisible={setModalUpdateVisible}
-            setModalDeleteVisible={setModalDeleteVisible}
-          />
+          ?
+          loading
+            ? <Loading />
+            : <ProductList
+              products={products}
+              setProduct={setProduct}
+              setRefresh={setRefresh}
+              setModalUpdateVisible={setModalUpdateVisible}
+              setModalDeleteVisible={setModalDeleteVisible}
+            />
           : <ProductListEmpty />
       }
 
@@ -126,26 +135,26 @@ export function Home() {
         setFilterNotSelected={setFilterNotSelected}
       />
 
-      <ClearProduct
-        visible={modalClearVisible}
-        setVisible={setModalClearVisible}
-        setRefresh={setRefreshData}
+      <CleanProduct
+        setVisible={setModalCleanVisible}
+        visible={modalCleanVisible}
+        setLoading={setLoading}
       />
       <NewProduct
-        visible={modalInsertVisible}
         setVisible={setModalInsertVisible}
-        setRefresh={setRefreshData}
+        visible={modalInsertVisible}
+        setLoading={setLoading}
       />
       <UpdateProduct
-        visible={modalUpdateVisible}
         setVisible={setModalUpdateVisible}
-        setRefresh={setRefreshData}
+        visible={modalUpdateVisible}
+        setLoading={setLoading}
         productDB={product}
       />
       <DeleteProduct
-        visible={modalDeleteVisible}
         setVisible={setModalDeleteVisible}
-        setRefresh={setRefreshData}
+        visible={modalDeleteVisible}
+        setLoading={setLoading}
         productDB={product}
       />
 

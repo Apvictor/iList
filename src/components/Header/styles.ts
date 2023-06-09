@@ -12,15 +12,10 @@ export const Content = styled.View`
   align-items: center;
 `;
 
-export const LogoImg = styled.Image`
-  height: 40px;
-  width: 40px;
-`;
-
 export const Title = styled.Text`
   padding-left: 5px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 

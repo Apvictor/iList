@@ -1,17 +1,17 @@
 import { Modal } from 'react-native';
 
-import theme from '../../../theme';
+import { Button, ButtonText, Buttons, Header, ModalContainer, ModalContent, Title } from './styles';
 
 import { ProductService } from '../../../domain/product/product.service';
 
-import { Button, ButtonText, Buttons, Header, ModalContainer, ModalContent, Title } from './styles';
+import theme from '../../../theme';
 
 interface Props {
   visible: boolean;
   setVisible: Function;
-  setRefresh: Function;
+  setLoading: Function;
 }
-export function ClearProduct({ visible, setVisible, setRefresh }: Props) {
+export function CleanProduct({ visible, setVisible, setLoading }: Props) {
 
   async function deleteProducts() {
     const productService = new ProductService();
@@ -19,7 +19,7 @@ export function ClearProduct({ visible, setVisible, setRefresh }: Props) {
     productService.deleteAll();
 
     setVisible(false);
-    setRefresh(true);
+    setLoading(true);
   }
 
   return (
@@ -31,12 +31,12 @@ export function ClearProduct({ visible, setVisible, setRefresh }: Props) {
           </Header>
 
           <Buttons>
-            <Button color={theme.COLORS.RED} onPress={() => setVisible(false)}>
-              <ButtonText>Cancelar</ButtonText>
+            <Button color={theme.COLORS.REDD} onPress={() => setVisible(false)}>
+              <ButtonText>CANCELAR</ButtonText>
             </Button>
 
             <Button color={theme.COLORS.GREEN} onPress={() => deleteProducts()}>
-              <ButtonText>Limpar</ButtonText>
+              <ButtonText>LIMPAR</ButtonText>
             </Button>
           </Buttons>
 

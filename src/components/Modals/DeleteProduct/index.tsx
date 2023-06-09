@@ -1,20 +1,19 @@
 import { Modal } from 'react-native';
 
-import theme from '../../../theme';
+import { Button, ButtonText, Buttons, Header, ModalContainer, ModalContent, Title } from './styles';
 
 import { ProductModel } from '../../../domain/product/product.model';
-
 import { ProductService } from '../../../domain/product/product.service';
 
-import { Button, ButtonText, Buttons, Header, ModalContainer, ModalContent, Title } from './styles';
+import theme from '../../../theme';
 
 interface Props {
   visible: boolean;
   productDB: ProductModel;
   setVisible: Function;
-  setRefresh: Function;
+  setLoading: Function;
 }
-export function DeleteProduct({ visible, setVisible, setRefresh, productDB }: Props) {
+export function DeleteProduct({ visible, setVisible, setLoading, productDB }: Props) {
 
   async function deleteProduct() {
     const productService = new ProductService();
@@ -22,7 +21,7 @@ export function DeleteProduct({ visible, setVisible, setRefresh, productDB }: Pr
     productService.delete(productDB._id);
 
     setVisible(false);
-    setRefresh(true);
+    setLoading(true);
   }
 
   return (
@@ -30,19 +29,19 @@ export function DeleteProduct({ visible, setVisible, setRefresh, productDB }: Pr
       <ModalContainer>
         <ModalContent>
           <Header>
-            <Title>Deseja realmente deletar este produto ?</Title>
+            <Title>Deseja realmente excluir este produto ?</Title>
           </Header>
 
           <Buttons>
-            <Button color={theme.COLORS.RED} onPress={() => {
+            <Button color={theme.COLORS.REDD} onPress={() => {
               setVisible(false);
-              setRefresh(true);
+              setLoading(true);
             }}>
-              <ButtonText>Cancelar</ButtonText>
+              <ButtonText>CANCELAR</ButtonText>
             </Button>
 
             <Button color={theme.COLORS.GREEN} onPress={() => deleteProduct()}>
-              <ButtonText>Deletar</ButtonText>
+              <ButtonText>EXCLUIR</ButtonText>
             </Button>
           </Buttons>
 

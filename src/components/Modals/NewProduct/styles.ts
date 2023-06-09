@@ -7,7 +7,7 @@ export const ModalContainer = styled.View`
   background-color: #000000CC;
   `;
 
-export const ModalContent = styled.View`
+export const ModalContent = styled.ScrollView`
   position: absolute;
   bottom: 0;
 
@@ -22,11 +22,11 @@ export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 `;
 
 export const Title = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: ${({ theme }) => theme.COLORS.TITLE};
 `;
@@ -35,13 +35,10 @@ export const Close = styled.TouchableOpacity``;
 
 export const Form = styled.View``;
 
-export const Input = styled.TextInput`
-  height: 54px;
-  padding: 0 20px;
-  border-radius: 6px;
-  color: ${({ theme }) => theme.COLORS.TEXT};
-  background-color: ${({ theme }) => theme.COLORS.BACKGROUND};
-  margin-top: 15px;
+export const Inline = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -51,6 +48,22 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.GREEN};
+`;
+
+export const ButtonSelected = styled.TouchableOpacity<any>`
+  height: 40px;
+  margin-top: 5px;
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${({ theme, color }) => color ? theme.COLORS.GREEN : theme.COLORS.GREEN};
+  background-color: ${({ theme, color }) => color ? theme.COLORS.GREEN : theme.COLORS.SHAPEP};
+`;
+
+export const ButtonSelectedText = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
 export const ButtonText = styled.Text`

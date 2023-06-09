@@ -14,7 +14,7 @@ export class ProductService {
           name: data.name,
           price: parseFloat(data.price),
           quantity: parseInt(data.quantity),
-          status: false
+          status: data.status
         });
       });
     } catch (error) {
@@ -38,8 +38,6 @@ export class ProductService {
             product[0].status = data.status
         });
       }
-
-
     } catch (error) {
       console.error(error);
     }
@@ -68,13 +66,11 @@ export class ProductService {
     try {
       const realm = await getRealm();
 
-      const product = realm
+      const products = realm
         .objects<ProductModel>("Product");
 
-      if (product.length > 0) {
-        realm.write(() => {
-          realm.delete(product[0])
-        });
+      for (let i = 0; i < products.length; i++) {
+        this.delete(products[i]._id);
       }
 
     } catch (error) {
